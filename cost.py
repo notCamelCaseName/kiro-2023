@@ -26,24 +26,24 @@ def cost(initial, token):
     total_sum = 0
 
     for elem in token["substations"]:
-	land_type = elem["land_cable_type"]
-	sub_type = elem["substation_type"]
-	
-	total_sum += initial["land_substation_cable_types"][land_type-1]["fixed_cost"] + initial["land_substation_cable_types"][land_type-1]["variable_cost"]*distance_to_land(initial, land_type)
-	total_sum += initial["substation_types"][sub_type-1]["cost"]
+        land_type = elem["land_cable_type"]
+        sub_type = elem["substation_type"]
+    
+        total_sum += initial["land_substation_cable_types"][land_type-1]["fixed_cost"] + initial["land_substation_cable_types"][land_type-1]["variable_cost"]*distance_to_land(initial, land_type)
+        total_sum += initial["substation_types"][sub_type-1]["cost"]
 
     for elem in token["substation_substation_cables"]: 
-	id1 = elem["substation_id"]
-	id2 = elem["other_substation_id"]
-	cab_type = elem["cable_type"]
-	
-	total_sum += initial["substation_substation_cable_types"][cab_type-1]["fixed_cost"] + initial["substation_substation_cable_types"][cab_type-1]["variable_cost"]*distance_substations(initial, id1, id2)
+        id1 = elem["substation_id"]
+        id2 = elem["other_substation_id"]
+        cab_type = elem["cable_type"]
+    
+        total_sum += initial["substation_substation_cable_types"][cab_type-1]["fixed_cost"] + initial["substation_substation_cable_types"][cab_type-1]["variable_cost"]*distance_substations(initial, id1, id2)
 
     for elem in token["turbines"]:
-	subst_id = elem["substation_id"]
-	id = elem["id"]
+        subst_id = elem["substation_id"]
+        _id = elem["id"]
 
-	total_sum += initial["general_parameters"]["fixed_cost_cable"] + initial["general_parameters"]["variable_cost_cable"]*distance_substation_turbine(initial, subst_id, id)
+        total_sum += initial["general_parameters"]["fixed_cost_cable"] + initial["general_parameters"]["variable_cost_cable"]*distance_substation_turbine(initial, subst_id, _id)
 
     return total_sum
 
@@ -77,7 +77,7 @@ test = {
         {
             "id" : 2,
             "substation_id" : 1
-        }
+        },
         {
             "id" : 3,
             "substation_id" : 2
