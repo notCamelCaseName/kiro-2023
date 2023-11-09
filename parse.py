@@ -14,7 +14,7 @@ class Pos:
         self.id = id
 
     def __repr__(self):
-        return f"({self.x}, {self.y} : {self.id})"
+        return f"Pos({self.x}, {self.y} : {self.id})"
     
 class Cable:
     def __init__(self, f_cost, var_cost, _id=None, proba_fail=None, rating=None):
@@ -26,11 +26,20 @@ class Cable:
             self.proba_fail = proba_fail
         if rating:
             self.rating = rating
+    def __repr__(self):
+        return f"Cable({self.f_cost} + l*{self.f_cost}, {self.proba_fail}, {self.rating} : {self.id})"
     
     def cost(self, length):
         return self.f_cost + length * self.var_cost
 
-
+class Sub:
+    def __init__(self, cost, _id, proba_fail, rating):
+        self.cost = cost
+        self.id = _id
+        self.proba_fail = proba_fail
+        self.rating = rating
+    def __repr__(self):
+        return f"Sub({self.cost} +, {self.proba_fail}, {self.rating} : {self.id})"
 
 _pos_v0 = _data["general_parameters"]["main_land_station"]
 pos_v0 = Pos(_pos_v0["x"], _pos_v0["y"], 0)
@@ -40,6 +49,8 @@ cp = _data["general_parameters"]["curtailing_penalty"]
 Cmax = _data["general_parameters"]["maximum_curtailing"]
 
 pos_lst_Vs = [Pos(k["x"], k["y"], k["id"]) for k in _data["substation_locations"]]
+
 cable_StaToSub = Cable(_data["general_parameters"]["fixed_cost_cable"],
                        _data["general_parameters"]["variable_cost_cable"])
 
+lst_sub = [Sub() for k in _data["substation_locations"]]
