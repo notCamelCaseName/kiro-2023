@@ -4,10 +4,8 @@ filename = "small.json"
 
 import json
 
-f = open(filename,"r").read()
-data = json.loads(f)
-
-print(data.keys())
+_f = open(filename,"r").read()
+_data = json.loads(_f)
 
 class Pos:
     def __init__(self, x, y, id):
@@ -17,8 +15,11 @@ class Pos:
 
     def __repr__(self):
         return f"({self.x}, {self.y} : {self.id})"
+    
 
-pos_v0 = tuple(data["general_parameters"]["main_land_station"].values())
-pos_Vs = [Pos(k["x"], k["y"], k["id"]) for k in data["substation_locations"]]
-print(pos_v0)
-print(pos_Vs)
+
+_pos_v0 = _data["general_parameters"]["main_land_station"]
+pos_v0 = Pos(_pos_v0["x"], _pos_v0["y"], 0)
+Pmax = _data["general_parameters"]["main_land_station"]
+
+pos_lst_Vs = [Pos(k["x"], k["y"], k["id"]) for k in _data["substation_locations"]]
